@@ -1,0 +1,144 @@
+/**
+  |============================
+  | include css partials with
+  | default @import url()
+  |============================
+*/
+@import url('./reset.css');
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color: #242424;
+  background-color: rgba(255, 255, 255, 0.87);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+.gallery,
+.loader-wrapper {
+  margin: 32px auto;
+  max-width: 1134px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.gallery-item {
+  border: 1px solid #808080;
+  width: 360px;
+  height: 200px;
+}
+
+.gallery-item-img {
+  display: block;
+  height: 80%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.img-info-list {
+  display: flex;
+  padding: 4px 20px;
+  justify-content: space-between;
+}
+
+.img-data-name {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.33333;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+}
+
+.img-data {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 2;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  padding-left: 16px;
+  outline: transparent;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  width: 272px;
+  height: 40px;
+  margin-right: 8px;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #2e2f42;
+  transition: border-color 0.5s ease-in-out;
+}
+
+input:hover {
+  border-color: #000;
+}
+
+input:focus {
+  border-color: #4e75ff;
+}
+
+input::placeholder {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #808080;
+}
+
+button[type='submit'] {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  min-width: 91px;
+  height: 40px;
+  background: #4e75ff;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+  transition: background-color 0.5s ease-in-out;
+}
+
+.loader {
+  width: 360px;
+  height: 200px;
+  background: linear-gradient(0.25turn, transparent, #fff, transparent),
+    linear-gradient(#ddd, #ddd), linear-gradient(#ddd, #ddd),
+    linear-gradient(#ddd, #ddd);
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: 360px 200px, 360px 130px, 330px 15px, 330px 15px;
+  background-position: -360px 0, 0 0, 15px 150px, 15px 180px;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  to {
+    background-position: 360px 0, 0 0, 15px 150px, 15px 180px;
+  }
+}
