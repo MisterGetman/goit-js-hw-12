@@ -7,7 +7,7 @@
       content="upgrade-insecure-requests"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vanilla App Template</title>
+    <title>goit-js-hw-12</title>
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
@@ -20,13 +20,15 @@
       />
       <button type="submit">Search</button>
     </form>
+    <ul class="gallery"></ul>
     <div class="loader-wrapper hidden">
       <div class="loader"></div>
       <div class="loader"></div>
       <div class="loader"></div>
     </div>
-
-    <ul class="gallery"></ul>
+    <div class="load-button-wrapper">
+      <button class="hidden" type="button" data-load>Load more</button>
+    </div>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
