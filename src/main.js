@@ -36,7 +36,7 @@ function queryParams(keyWord) {
   return params.toString();
 }
 
-function handleFormSubmit(e) {
+async function handleFormSubmit(e) {
   e.preventDefault();
   loader.classList.toggle('hidden');
   page = 1;
@@ -44,16 +44,16 @@ function handleFormSubmit(e) {
   form.keyWord.value = '';
   gallery.innerHTML = '';
 
-  loadAndRenderPics();
+  await loadAndRenderPics();
 
   loader.classList.toggle('hidden');
 }
 
-function handleLoadButtonClick(e) {
+async function handleLoadButtonClick(e) {
   loader.classList.toggle('hidden');
   page++;
 
-  loadAndRenderMorePics();
+  await loadAndRenderMorePics();
 
   loader.classList.toggle('hidden');
 }
