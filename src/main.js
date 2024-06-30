@@ -6,8 +6,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import imgCardsTemplate from './js/render-functions';
 import getPics from './js/pixabay-api';
 
-const PER_PAGE = 15;
-const API_KEY = '44691469-d7e9dab06c3e716fb34c6ceb9';
+const perPage = 15;
 const form = document.querySelector('form');
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader-wrapper');
@@ -22,53 +21,43 @@ let page;
 form.addEventListener('submit', handleFormSubmit);
 loadButton.addEventListener('click', handleLoadButtonClick);
 
-function queryParams(keyWord) {
-  const params = new URLSearchParams({
-    key: API_KEY,
-    q: keyWord,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: true,
-    page: page,
-    per_page: PER_PAGE,
-  });
-
-  return params.toString();
-}
-
-async function handleFormSubmit(e) {
+function handleFormSubmit(e) {
   e.preventDefault();
-  loader.classList.toggle('hidden');
   page = 1;
   keyWord = form.keyWord.value.trim();
+
+  if (keyWord === '') {
+    showNotification({
+      title: '<b>Error:</b>',
+      message: 'Input can not be blank.',
+      backgroundColor: 'tomato',
+    });
+
+    return;
+  }
+
   form.keyWord.value = '';
   gallery.innerHTML = '';
 
-  await loadAndRenderPics();
-
-  loader.classList.toggle('hidden');
+  loadAndRenderPics();
 }
 
-async function handleLoadButtonClick() {
-  loader.classList.toggle('hidden');
+function handleLoadButtonClick() {
   page++;
-
-  await loadAndRenderMorePics();
-
-  loader.classList.toggle('hidden');
+  loadAndRenderMorePics();
 }
 
 async function loadAndRenderPics() {
   try {
-    if (keyWord === '') return Promise.reject('Input can not be blank.');
+    loader.classList.toggle('hidden');
+    const { hits, totalHits } = await getPics(keyWord, page);
+    loader.classList.toggle('hidden');
 
-    const data = await getPics(queryParams(keyWord));
-
-    if (data.hits.length > 0) {
-      gallery.insertAdjacentHTML('afterbegin', imgCardsTemplate(data.hits));
+    if (hits.length > 0) {
+      gallery.insertAdjacentHTML('afterbegin', imgCardsTemplate(hits));
       modal.refresh();
 
-      handleLoadButtonDisplay(data.totalHits);
+      handleLoadButtonDisplay(totalHits);
     } else {
       showNotification({
         title: '<b>Oops!</b>',
@@ -88,14 +77,16 @@ async function loadAndRenderPics() {
 
 async function loadAndRenderMorePics() {
   try {
-    const data = await getPics(queryParams(keyWord));
+    loader.classList.toggle('hidden');
+    const { hits, totalHits } = await getPics(keyWord, page);
+    loader.classList.toggle('hidden');
 
-    gallery.insertAdjacentHTML('beforeend', imgCardsTemplate(data.hits));
+    gallery.insertAdjacentHTML('beforeend', imgCardsTemplate(hits));
     modal.refresh();
 
     doSmoothScroll();
 
-    handleLoadButtonDisplay(data.totalHits);
+    handleLoadButtonDisplay(totalHits);
   } catch (error) {
     showNotification({
       title: '<b>Error:</b>',
@@ -119,7 +110,7 @@ function handleLoadButtonDisplay(maxResults) {
 }
 
 function canLoadMore(maxResults) {
-  return Math.ceil(maxResults / PER_PAGE) > page;
+  return Math.ceil(maxResults / perPage) > page;
 }
 
 function showNotification({ title, message, backgroundColor }) {
