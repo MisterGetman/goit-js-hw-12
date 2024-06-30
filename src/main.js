@@ -49,7 +49,7 @@ async function handleFormSubmit(e) {
   loader.classList.toggle('hidden');
 }
 
-async function handleLoadButtonClick(e) {
+async function handleLoadButtonClick() {
   loader.classList.toggle('hidden');
   page++;
 
@@ -80,7 +80,7 @@ async function loadAndRenderPics() {
   } catch (error) {
     showNotification({
       title: '<b>Error:</b>',
-      message: error,
+      message: error.message,
       backgroundColor: 'tomato',
     });
   }
@@ -99,7 +99,7 @@ async function loadAndRenderMorePics() {
   } catch (error) {
     showNotification({
       title: '<b>Error:</b>',
-      message: error,
+      message: error.message,
       backgroundColor: 'tomato',
     });
   }
